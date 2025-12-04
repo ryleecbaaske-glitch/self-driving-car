@@ -6,6 +6,9 @@ class Microphone {
 
     draw(ctx) {
         ctx.beginPath();
+        ctx.font = "50px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
         ctx.fillText("🎤", this.x, this.y);
     } 
 }
