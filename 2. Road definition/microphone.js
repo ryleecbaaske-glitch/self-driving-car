@@ -4,6 +4,14 @@ class Microphone {
         this.y = y;  
     }
 
+    recieve(soundWaves) {
+        for (const soundWave of soundWaves) {
+            if (dist(soundWave, this) <= soundWave.radius) {
+              soundWave.play();  
+            }
+        }
+    }
+
     draw(ctx) {
         ctx.beginPath();
         ctx.font = "50px Arial";

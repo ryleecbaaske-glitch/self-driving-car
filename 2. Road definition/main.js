@@ -18,6 +18,8 @@ function animate(){
     for(const soundWave of soundWaves){
         soundWave.update();
     }
+microphone.recieve(soundWaves);
+
 
     canvas.height=window.innerHeight;
 
