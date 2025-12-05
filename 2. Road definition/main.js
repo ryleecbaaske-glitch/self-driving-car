@@ -6,9 +6,11 @@ const road=new Road(canvas.width/2,canvas.width*0.9);
 const car=new Car(road.getLaneCenter(1),100,30,50);
 const microphone=new Microphone(road.getLaneCenter(1),-400);
 
+let neeNaw = "nee";
 const soundWaves = [];
 setInterval(() => {
-    soundWaves.push(new soundWave(car.x, car.y));
+    soundWaves.push(new soundWave(car.x, car.y, neeNaw));
+    neeNaw = neeNaw == "nee" ? "naw" : "nee";
 }, 1000);
 
 animate();

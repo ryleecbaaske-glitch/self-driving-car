@@ -1,18 +1,32 @@
 const audioCtx = new (window.Audiocontext || window.webkitAudioContext)();
 
 class soundwave {
-    constructor (x,y) {
+    constructor (x,y, neeNaw) {
         this.x = x;
         this.y = y;
+
+        this.frequency = neeNaw == "nee" ? 700 : 500;
+        this.color = neeNaw == "nee" ? "red" : "blue";
+
         this.radius = 0;
         this.played = false;
     }
 
-    play(duration = 0.5) {
+    play(duration = 1) {
         if (this.played) return;
 
         const osc = audioCtx.createOscillator();
-        osc.connect(audioCtx.destination);
+        const envelope = audioCtx.createGain();
+
+        const loudness = Math.exp(-this.radius / 500);
+        envelope.gain.setValueAtTime(0, audioCtx.currentTime);
+        envelope.gain.linearRampToValueAtTime(loudness, audioCtx.currentTime + 0.1);
+        envelope.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(this.frequency, audioCtx.currentTime);
+        osc.connect(envelope);
+        envelope.connect(audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
         this.played = true;
